@@ -9,4 +9,4 @@ binding = "ASSETS"
 
 [[services]]
 binding = "WORKER_SELF_REFERENCE"
-service = "revenue-cost-intelligence"
+service = "revenue-cost-intelligence-mvp"
