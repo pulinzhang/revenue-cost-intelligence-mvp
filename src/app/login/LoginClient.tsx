@@ -42,19 +42,24 @@ export function LoginClient({ azureEnabled }: { azureEnabled: boolean }) {
             className="flex flex-col gap-4"
             onSubmit={async (e) => {
               e.preventDefault();
+              debugger;
               setBusy(true);
               setLoginError(null);
               try {
+                debugger;
                 const form = new FormData(e.currentTarget as HTMLFormElement);
+                debugger;
                 const result = await signIn("credentials", {
                   email: String(form.get("email") ?? ""),
                   password: String(form.get("password") ?? ""),
                   callbackUrl: "/dashboard",
                   redirect: false,
                 });
+                debugger;
                 if (result?.error) setLoginError(t("auth.invalidEmailOrPassword"));
                 else if (result?.url) window.location.assign(result.url);
               } finally {
+                debugger;
                 setBusy(false);
               }
             }}
@@ -93,7 +98,46 @@ export function LoginClient({ azureEnabled }: { azureEnabled: boolean }) {
           {azureEnabled ? (
             <button
               disabled={busy}
-              onClick={() => signIn("azure-ad", { callbackUrl: "/dashboard" })}
+              onClick={async () => {
+                debugger;
+                setBusy(true);
+                setLoginError(null);
+                try {
+                  debugger;
+                  console.log("Starting Azure sign in...");
+                  console.log("Azure provider ID:", "azure-ad");
+                  console.log("signIn function:", signIn);
+                  debugger;
+
+                  // Add timeout wrapper
+                  const timeoutPromise = new Promise((_, reject) =>
+                    setTimeout(() => reject(new Error("Sign in timeout (10s)")), 10000)
+                  );
+
+                  const signInPromise = signIn("azure-ad", { callbackUrl: "/dashboard", redirect: false });
+
+                  const result = await Promise.race([signInPromise, timeoutPromise]);
+                  debugger;
+                  console.log("Azure sign in result:", result);
+                  if (result?.error) {
+                    setLoginError(`SSO Error: ${result.error}`);
+                  } else if (result?.url) {
+                    window.location.assign(result.url);
+                  }
+                } catch (err) {
+                  debugger;
+                  console.error("Azure sign in exception:", err);
+                  console.error("Error type:", typeof err);
+                  console.error("Error message:", err instanceof Error ? err.message : String(err));
+                  if (err instanceof Error && err.cause) {
+                    console.error("Error cause:", err.cause);
+                  }
+                  setLoginError(err instanceof Error ? err.message : "Unknown error");
+                } finally {
+                  debugger;
+                  setBusy(false);
+                }
+              }}
               type="button"
               className="w-full rounded-md border px-4 py-2 text-sm hover:bg-zinc-50 disabled:opacity-50"
             >
