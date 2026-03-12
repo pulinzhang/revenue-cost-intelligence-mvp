@@ -3,7 +3,7 @@ Revenue & Cost Intelligence Platform
 MVP Technical Specification
 
 1. Project Overview
-1.1 Objective
+   1.1 Objective
 
 Build a secure, Azure-hosted financial analytics web application that enables marketing/operational agencies to:
 
@@ -20,7 +20,7 @@ Access the system via SSO or local authentication
 The data pipeline is pre-built. The application layer (API + frontend) will be implemented on top of an existing PostgreSQL database hosted on Azure.
 
 2. System Architecture
-2.1 Architecture Style
+   2.1 Architecture Style
 
 Monolithic full-stack architecture using Next.js.
 
@@ -78,8 +78,8 @@ GitHub Actions CI/CD
 Environment variables via Azure Configuration
 
 3. Functional Requirements
-3.1 Authentication & Security
-3.1.1 Login Methods
+   3.1 Authentication & Security
+   3.1.1 Login Methods
 
 System shall support:
 
@@ -216,24 +216,23 @@ Audit timestamp
 Linked to authenticated user
 
 4. Business Logic Specifications
-4.1 Revenue Aggregation
-SELECT region, shop_id, DATE_TRUNC('month', date) AS month,
-       SUM(revenue) AS total_revenue
-FROM transactions
-GROUP BY region, shop_id, month;
-4.2 Cost Calculation
-Total Cost = Fixed Cost + Variable Cost
-4.3 Gross Margin
-Gross Margin = Revenue - Total Cost
-4.4 Gross Margin %
-Gross Margin % = (Revenue - Total Cost) / Revenue
-4.5 Break-even Analysis
-Break-even = Fixed Cost / (1 - VariableCostRatio)
+   4.1 Revenue Aggregation
+   SELECT region, shop_id, DATE_TRUNC('month', date) AS month,
+   SUM(revenue) AS total_revenue
+   FROM transactions
+   GROUP BY region, shop_id, month;
+   4.2 Cost Calculation
+   Total Cost = Fixed Cost + Variable Cost
+   4.3 Gross Margin
+   Gross Margin = Revenue - Total Cost
+   4.4 Gross Margin %
+   Gross Margin % = (Revenue - Total Cost) / Revenue
+   4.5 Break-even Analysis
+   Break-even = Fixed Cost / (1 - VariableCostRatio)
 
 Where:
 
-VariableCostRatio = Variable Cost / Revenue
-5. Database Schema (MVP)
+VariableCostRatio = Variable Cost / Revenue 5. Database Schema (MVP)
 5.1 Core Tables
 transactions
 
@@ -314,7 +313,7 @@ GET /api/entries/list
 All endpoints require authenticated session.
 
 7. Non-Functional Requirements
-7.1 Performance
+   7.1 Performance
 
 Support up to 1M records
 

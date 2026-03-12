@@ -1,0 +1,17 @@
+.next
+out
+build
+coverage
+node_modules
+
+# logs
+*.log
+
+# lockfiles
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# generated
+next-env.d.ts
+

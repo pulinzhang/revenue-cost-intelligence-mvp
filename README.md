@@ -1,36 +1,194 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Revenue & Cost Intelligence Platform (MVP)
 
-## Getting Started
+Monolithic full-stack **Next.js (App Router)** MVP for revenue/cost analytics and manual financial entries.
 
-First, run the development server:
+## Contents
+
+- [Tech stack](#tech-stack)
+- [Features](#features)
+- [Quick start (local)](#quick-start-local)
+- [Architecture](#architecture)
+- [Project structure](#project-structure)
+- [Routes](#routes)
+- [How to check code](#how-to-check-code)
+- [Deployment notes (Azure App Service)](#deployment-notes-azure-app-service)
+
+## Tech stack
+
+- **Frontend**: Next.js + React, Tailwind CSS
+- **Auth**: `next-auth` (Azure AD SSO + local email/password)
+- **Database**: PostgreSQL (`pg`) + raw SQL (Supabase)
+- **Charts**: Recharts
+- **Data grid**: AG Grid Community
+
+## Features
+
+- **Dashboard**: KPI summary + revenue/cost trends
+- **Finance table**: paged financial detail list
+- **Entries**: manual entry create + list
+- **Route protection**: enforced via `src/proxy.ts` (except `/login` and `api/auth/*`)
+
+## Quick start (local)
+
+1. Install deps
+
+```bash
+npm i
+```
+
+2. Create env file
+
+- Copy `env.example` to `.env.local` and fill values:
+  - `DATABASE_URL`
+  - `AUTH_SECRET`
+  - (optional) Azure AD: `AZURE_AD_CLIENT_ID`, `AZURE_AD_CLIENT_SECRET`, `AZURE_AD_TENANT_ID`
+
+3. Create tables
+
+Run `sql/schema.sql` against your Supabase PostgreSQL database. You can use the Supabase SQL Editor or any PostgreSQL client.
+
+4. Start dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Architecture
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **UI (App Router pages)**: `src/app/(app)/*`
+- **API (Route Handlers)**: `src/app/api/*`
+- **Services (domain orchestration)**: `src/lib/services/*`
+- **Data access**:
+  - **Repositories**: `src/lib/repositories/*` (CRUD / transactional DB access)
+  - **Queries**: `src/lib/queries/*` (read/reporting SQL helpers, e.g. dashboard/finance)
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```text
+.
+├─ docs/
+│  └─ tech-require.md          # requirements / notes
+├─ public/                     # static assets
+├─ sql/
+│  └─ schema.sql               # PostgreSQL schema (tables/indexes)
+├─ src/
+│  ├─ app/                     # Next.js App Router
+│  │  ├─ (app)/                # authenticated app pages (wrapped by (app)/layout.tsx)
+│  │  │  ├─ dashboard/page.tsx  # /dashboard
+│  │  │  ├─ entries/page.tsx    # /entries
+│  │  │  ├─ finance/page.tsx    # /finance
+│  │  │  └─ layout.tsx          # app shell layout
+│  │  ├─ api/                  # Route Handlers (API)
+│  │  │  ├─ auth/
+│  │  │  │  ├─ [...nextauth]/route.ts  # NextAuth handlers
+│  │  │  │  └─ register/route.ts       # local email/password registration (MVP)
+│  │  │  ├─ dashboard/
+│  │  │  │  ├─ summary/route.ts  # KPI summary
+│  │  │  │  └─ trends/route.ts   # charts/trends
+│  │  │  ├─ entries/
+│  │  │  │  ├─ create/route.ts   # create manual entry
+│  │  │  │  └─ list/route.ts     # list manual entries
+│  │  │  └─ finance/
+│  │  │     └─ list/route.ts     # paged finance list
+│  │  ├─ login/                # /login (client + page)
+│  │  ├─ layout.tsx            # root layout
+│  │  └─ page.tsx              # landing (/)
+│  ├─ components/              # shared UI components (charts/grid/panels)
+│  ├─ lib/
+│  │  ├─ auth.ts               # auth helpers + next-auth options
+│  │  ├─ db.ts                 # pg pool + query helper
+│  │  ├─ env.ts                # env loading/validation
+│  │  ├─ errors.ts             # shared error helpers
+│  │  ├─ queries/              # read/reporting SQL helpers (dashboard/finance/filters)
+│  │  ├─ repositories/         # transactional CRUD (users/entries)
+│  │  ├─ services/             # domain services (API calls these)
+│  │  └─ validators/           # zod schemas (entry/user)
+│  ├─ types/                   # domain types (dashboard/finance/user)
+│  └─ proxy.ts                 # route protection
+├─ env.example                 # env template
+├─ eslint.config.mjs           # ESLint config
+├─ next.config.ts              # Next.js config
+└─ package.json
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### App routes
 
-## Deploy on Vercel
+- `/login`: sign in (credentials) + optional Azure AD SSO + local register (MVP)
+- `/dashboard`: KPI summary + revenue/cost trends
+- `/finance`: financial detail table (paged)
+- `/entries`: manual entries (create + list)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### API routes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `GET /api/dashboard/summary`
+- `GET /api/dashboard/trends`
+- `GET /api/finance/list?page=1&pageSize=50`
+- `POST /api/entries/create`
+- `GET /api/entries/list?limit=50`
+
+## How to check code
+
+## Test accounts (seed)
+
+If you ran `sql/seed.sample-data.sql`, it creates a local admin user you can sign in with:
+
+- **Email**: `admin2@example.com`
+- **Password**: `admin123`
+
+### Lint
+
+```bash
+npm run lint
+```
+
+Auto-fix what can be fixed:
+
+```bash
+npm run lint:fix
+```
+
+### Format (Prettier)
+
+Check formatting:
+
+```bash
+npm run format:check
+```
+
+Write formatting:
+
+```bash
+npm run format
+```
+
+### Typecheck
+
+Next.js build runs type checking by default:
+
+```bash
+npm run build
+```
+
+Or run TypeScript directly (fast local check):
+
+```bash
+npx tsc --noEmit
+```
+
+## Deployment notes
+
+### Supabase PostgreSQL
+
+- Get your connection string from Supabase Dashboard > Settings > Database > Connection string > URI
+- The connection string should include `?sslmode=require` for secure connections
+- Run `sql/schema.sql` in Supabase SQL Editor to create tables
+
+### Azure App Service (if deploying there)
+
+- Set the same env vars in App Service Configuration.
+- Ensure `DATABASE_URL` uses TLS (`sslmode=require`).
+- Use a stable `AUTH_SECRET` per environment.
