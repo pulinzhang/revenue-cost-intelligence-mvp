@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
+import { defineProxy } from "@opennextjs/cloudflare";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
 };
 
-export default nextConfig;
+export default defineProxy(nextConfig, {
+  external: true,
+});
