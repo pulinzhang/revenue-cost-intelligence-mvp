@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "pages:build": "next build",
+    "pages:dev": "next dev"
   },
   "dependencies": {
     "ag-grid-community": "^35.1.0",

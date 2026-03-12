@@ -55,6 +55,12 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_5FBD959135C140CA9DE502F5C6D9B8F3 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C0FD19766B194E6CBBD49D4E2300AEF5 }}
 
+      - name: Start Azure Web App
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            az webapp start --name revenuecostmvp --resource-group your-resource-group-name
+
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
