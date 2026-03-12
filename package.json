@@ -15,7 +15,9 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "pages:build": "next build",
-    "pages:dev": "next dev"
+    "pages:dev": "next dev",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.17.1",
