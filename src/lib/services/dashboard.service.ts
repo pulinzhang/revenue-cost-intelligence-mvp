@@ -9,4 +9,3 @@ export async function fetchDashboardSummary(filters: CommonFilters) {
 export async function fetchRevenueCostTrends(filters: CommonFilters) {
   return getRevenueCostTrends(filters);
 }
-

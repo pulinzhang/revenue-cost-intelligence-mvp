@@ -1,6 +1,10 @@
 export const fr = {
   app: { name: "Intelligence Revenus & Coûts" },
-  nav: { dashboard: "Tableau de bord", finance: "Détails financiers", entries: "Saisie de données" },
+  nav: {
+    dashboard: "Tableau de bord",
+    finance: "Détails financiers",
+    entries: "Saisie de données",
+  },
   common: {
     language: "Langue",
     start: "Début",
@@ -54,11 +58,13 @@ export const fr = {
     costMixHelp: "Contribution des coûts fixes et variables pour la période sélectionnée.",
     vsLastPeriod: "vs période précédente",
     alertsTitle: "Alertes",
-    alertCostOutpacingRevenue: "Les coûts augmentent plus vite que les revenus vs période précédente.",
+    alertCostOutpacingRevenue:
+      "Les coûts augmentent plus vite que les revenus vs période précédente.",
     alertMarginDown: "La marge a diminué vs période précédente.",
     alertMarginUp: "La marge s'est améliorée vs période précédente.",
     alertNearBreakEven: "Les revenus sont proches du seuil de rentabilité pour cette période.",
-    breakEvenHelp: "Revenus nécessaires pour couvrir les coûts fixes au ratio de coût variable actuel.",
+    breakEvenHelp:
+      "Revenus nécessaires pour couvrir les coûts fixes au ratio de coût variable actuel.",
     safetyMargin: "Marge de sécurité",
     safetyMarginHelp: "Écart entre les revenus et le seuil de rentabilité pour cette période.",
     prevGrossProfit: "Profit brut précédent",
@@ -70,7 +76,8 @@ export const fr = {
     insightMargin: "Marge",
     contributionMargin: "Marge contributive",
     contributionMarginRate: "(Revenus − Coût variable) / Revenus",
-    contributionMarginHelp: "Un indicateur clé d'exploitation : combien de revenus restent pour couvrir les coûts fixes et le profit.",
+    contributionMarginHelp:
+      "Un indicateur clé d'exploitation : combien de revenus restent pour couvrir les coûts fixes et le profit.",
     trendTitle: "Tendance Revenus & Coûts & Profit",
     monthlyAggregation: "Agrégation mensuelle",
     yAxisUsdMillions: "USD (Millions)",

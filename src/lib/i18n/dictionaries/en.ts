@@ -76,7 +76,8 @@ export const en = {
     insightMargin: "Margin",
     contributionMargin: "Contribution Margin",
     contributionMarginRate: "(Revenue − Variable Cost) / Revenue",
-    contributionMarginHelp: "A core operating metric: how much revenue remains to cover fixed costs and profit.",
+    contributionMarginHelp:
+      "A core operating metric: how much revenue remains to cover fixed costs and profit.",
     trendTitle: "Revenue / Cost / Profit Trend",
     monthlyAggregation: "Monthly aggregation",
     yAxisUsdMillions: "USD (Millions)",
@@ -128,4 +129,3 @@ export const en = {
     description: "Description",
   },
 } as const;
-

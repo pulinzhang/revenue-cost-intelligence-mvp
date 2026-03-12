@@ -35,4 +35,3 @@ export function AppHeader({ email }: { email?: string | null }) {
     </header>
   );
 }
-

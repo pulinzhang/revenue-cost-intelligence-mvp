@@ -34,9 +34,7 @@ export function LoginClient({ azureEnabled }: { azureEnabled: boolean }) {
             <div>
               Password: <span className="font-mono">admin123</span>
             </div>
-            <div className="mt-1 text-xs text-zinc-500">
-              These values are prefilled below.
-            </div>
+            <div className="mt-1 text-xs text-zinc-500">These values are prefilled below.</div>
           </div>
           <form
             className="flex flex-col gap-4"
@@ -110,13 +108,18 @@ export function LoginClient({ azureEnabled }: { azureEnabled: boolean }) {
                   debugger;
 
                   // Add timeout wrapper
-                  const timeoutPromise = new Promise((_, reject) =>
-                    setTimeout(() => reject(new Error("Sign in timeout (10s)")), 10000)
+                  const timeoutPromise = new Promise<never>((_, reject) =>
+                    setTimeout(() => reject(new Error("Sign in timeout (10s)")), 10000),
                   );
 
-                  const signInPromise = signIn("azure-ad", { callbackUrl: "/dashboard", redirect: false });
+                  const signInPromise = signIn("azure-ad", {
+                    callbackUrl: "/dashboard",
+                    redirect: false,
+                  });
 
-                  const result = await Promise.race([signInPromise, timeoutPromise]);
+                  const result = (await Promise.race([signInPromise, timeoutPromise])) as Awaited<
+                    ReturnType<typeof signIn>
+                  >;
                   debugger;
                   console.log("Azure sign in result:", result);
                   if (result?.error) {

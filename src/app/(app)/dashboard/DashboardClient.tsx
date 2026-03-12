@@ -6,7 +6,15 @@ import { useI18n } from "@/lib/i18n/I18nProvider";
 import type { ReactNode } from "react";
 import { useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { differenceInCalendarDays, endOfMonth, format, parseISO, startOfMonth, startOfYear, subMonths } from "date-fns";
+import {
+  differenceInCalendarDays,
+  endOfMonth,
+  format,
+  parseISO,
+  startOfMonth,
+  startOfYear,
+  subMonths,
+} from "date-fns";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 function isoDate(d: Date) {
@@ -130,10 +138,16 @@ export function DashboardClient({
     if (n == null || !Number.isFinite(n)) return <span className="text-zinc-500">—</span>;
     const up = n > 0;
     const down = n < 0;
-    const tone = up ? "text-emerald-700 bg-emerald-50 border-emerald-200" : down ? "text-rose-700 bg-rose-50 border-rose-200" : "text-zinc-700 bg-zinc-50 border-zinc-200";
+    const tone = up
+      ? "text-emerald-700 bg-emerald-50 border-emerald-200"
+      : down
+        ? "text-rose-700 bg-rose-50 border-rose-200"
+        : "text-zinc-700 bg-zinc-50 border-zinc-200";
     const arrow = up ? "↑" : down ? "↓" : "→";
     return (
-      <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium ${tone}`}>
+      <span
+        className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium ${tone}`}
+      >
         <span className="tabular-nums">{fmtGrowth(n)}</span>
         <span className="text-[11px]">{compareLabel}</span>
         <span className="text-[11px]">{arrow}</span>
@@ -146,9 +160,15 @@ export function DashboardClient({
     if (n == null || !Number.isFinite(n)) return <span className="text-zinc-500">—</span>;
     const up = n > 0;
     const down = n < 0;
-    const tone = up ? "text-emerald-700 bg-emerald-50 border-emerald-200" : down ? "text-rose-700 bg-rose-50 border-rose-200" : "text-zinc-700 bg-zinc-50 border-zinc-200";
+    const tone = up
+      ? "text-emerald-700 bg-emerald-50 border-emerald-200"
+      : down
+        ? "text-rose-700 bg-rose-50 border-rose-200"
+        : "text-zinc-700 bg-zinc-50 border-zinc-200";
     return (
-      <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium ${tone}`}>
+      <span
+        className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium ${tone}`}
+      >
         <span className="tabular-nums">{`${n >= 0 ? "+" : ""}${n.toFixed(1)} pp`}</span>
         <span className="text-[11px]">{compareLabel}</span>
       </span>
@@ -163,15 +183,21 @@ export function DashboardClient({
   const variableRatio = totalCost > 0 ? summary.variableCost / totalCost : null;
   const costRatio = summary.totalRevenue > 0 ? summary.totalCost / summary.totalRevenue : null;
   const prevCostRatio =
-    previousSummary.totalRevenue > 0 ? previousSummary.totalCost / previousSummary.totalRevenue : null;
+    previousSummary.totalRevenue > 0
+      ? previousSummary.totalCost / previousSummary.totalRevenue
+      : null;
   const costRatioDeltaPp =
     costRatio == null || prevCostRatio == null ? null : (costRatio - prevCostRatio) * 100;
 
   const contributionMargin =
-    summary.totalRevenue > 0 ? (summary.totalRevenue - summary.variableCost) / summary.totalRevenue : null;
+    summary.totalRevenue > 0
+      ? (summary.totalRevenue - summary.variableCost) / summary.totalRevenue
+      : null;
 
   const revenueAboveBreakEvenPct =
-    summary.breakEvenPoint != null && Number.isFinite(summary.breakEvenPoint) && summary.breakEvenPoint > 0
+    summary.breakEvenPoint != null &&
+    Number.isFinite(summary.breakEvenPoint) &&
+    summary.breakEvenPoint > 0
       ? summary.totalRevenue / summary.breakEvenPoint - 1
       : null;
 
@@ -179,18 +205,34 @@ export function DashboardClient({
     const items: Array<{ type: "warn" | "info"; text: string }> = [];
     const rev = growth.revenuePct;
     const cost = growth.costPct;
-    if (typeof rev === "number" && typeof cost === "number" && Number.isFinite(rev) && Number.isFinite(cost)) {
-      if (cost - rev > 0.05) items.push({ type: "warn", text: t("dashboard.alertCostOutpacingRevenue") });
+    if (
+      typeof rev === "number" &&
+      typeof cost === "number" &&
+      Number.isFinite(rev) &&
+      Number.isFinite(cost)
+    ) {
+      if (cost - rev > 0.05)
+        items.push({ type: "warn", text: t("dashboard.alertCostOutpacingRevenue") });
     }
-    if (typeof growth.grossMarginPctPoints === "number" && Number.isFinite(growth.grossMarginPctPoints)) {
-      if (growth.grossMarginPctPoints <= -1) items.push({ type: "warn", text: t("dashboard.alertMarginDown") });
-      if (growth.grossMarginPctPoints >= 1) items.push({ type: "info", text: t("dashboard.alertMarginUp") });
+    if (
+      typeof growth.grossMarginPctPoints === "number" &&
+      Number.isFinite(growth.grossMarginPctPoints)
+    ) {
+      if (growth.grossMarginPctPoints <= -1)
+        items.push({ type: "warn", text: t("dashboard.alertMarginDown") });
+      if (growth.grossMarginPctPoints >= 1)
+        items.push({ type: "info", text: t("dashboard.alertMarginUp") });
     }
-    if (summary.breakEvenPoint != null && Number.isFinite(summary.breakEvenPoint) && summary.breakEvenPoint > 0) {
+    if (
+      summary.breakEvenPoint != null &&
+      Number.isFinite(summary.breakEvenPoint) &&
+      summary.breakEvenPoint > 0
+    ) {
       const headroom = summary.totalRevenue - summary.breakEvenPoint;
       if (summary.totalRevenue > 0) {
         const headroomPct = headroom / summary.totalRevenue;
-        if (headroomPct < 0.1) items.push({ type: "warn", text: t("dashboard.alertNearBreakEven") });
+        if (headroomPct < 0.1)
+          items.push({ type: "warn", text: t("dashboard.alertNearBreakEven") });
       }
     }
     return items.slice(0, 3);
@@ -202,7 +244,12 @@ export function DashboardClient({
     const cost = growth.costPct;
     const marginPp = growth.grossMarginPctPoints;
 
-    if (typeof rev === "number" && typeof cost === "number" && Number.isFinite(rev) && Number.isFinite(cost)) {
+    if (
+      typeof rev === "number" &&
+      typeof cost === "number" &&
+      Number.isFinite(rev) &&
+      Number.isFinite(cost)
+    ) {
       if (cost > rev + 0.01) {
         items.push(
           `Revenue grew ${fmtGrowth(rev)}, but cost grew faster at ${fmtGrowth(cost)} — margin pressure is likely coming from costs.`,
@@ -230,16 +277,26 @@ export function DashboardClient({
       }
     }
 
-    if (typeof costRatioDeltaPp === "number" && Number.isFinite(costRatioDeltaPp) && Math.abs(costRatioDeltaPp) >= 0.2) {
+    if (
+      typeof costRatioDeltaPp === "number" &&
+      Number.isFinite(costRatioDeltaPp) &&
+      Math.abs(costRatioDeltaPp) >= 0.2
+    ) {
       items.push(
         `Cost ratio changed ${costRatioDeltaPp >= 0 ? "+" : ""}${costRatioDeltaPp.toFixed(1)}pp vs the prior period — this is the clearest “efficiency” signal.`,
       );
     }
 
-    if (summary.breakEvenPoint != null && Number.isFinite(summary.breakEvenPoint) && summary.breakEvenPoint > 0) {
+    if (
+      summary.breakEvenPoint != null &&
+      Number.isFinite(summary.breakEvenPoint) &&
+      summary.breakEvenPoint > 0
+    ) {
       const headroom = summary.totalRevenue - summary.breakEvenPoint;
       if (headroom < 0) {
-        items.push(`Revenue is below break-even — focus on variable-cost reduction or pricing to recover margin.`);
+        items.push(
+          `Revenue is below break-even — focus on variable-cost reduction or pricing to recover margin.`,
+        );
       } else if (revenueAboveBreakEvenPct != null && Number.isFinite(revenueAboveBreakEvenPct)) {
         items.push(
           `Revenue is ${fmtGrowth(revenueAboveBreakEvenPct)} above break-even — you have a meaningful safety buffer for this range.`,
@@ -413,7 +470,9 @@ export function DashboardClient({
           <KpiCard
             title={t("dashboard.variableCost")}
             value={moneyCompact(summary.variableCost)}
-            sub={variableRatio == null ? "—" : `${pct(variableRatio, 1)} ${t("dashboard.ofTotalCost")}`}
+            sub={
+              variableRatio == null ? "—" : `${pct(variableRatio, 1)} ${t("dashboard.ofTotalCost")}`
+            }
           />
           <KpiCard
             title={t("dashboard.costRatio")}
@@ -432,7 +491,10 @@ export function DashboardClient({
                   <Pie
                     data={[
                       { name: t("dashboard.fixedCost"), value: Math.max(0, summary.fixedCost) },
-                      { name: t("dashboard.variableCost"), value: Math.max(0, summary.variableCost) },
+                      {
+                        name: t("dashboard.variableCost"),
+                        value: Math.max(0, summary.variableCost),
+                      },
                     ]}
                     dataKey="value"
                     nameKey="name"
@@ -463,7 +525,9 @@ export function DashboardClient({
           </div>
 
           <div className="rounded-xl border bg-white p-4">
-            <div className="text-sm font-medium text-zinc-900">{t("dashboard.contributionMargin")}</div>
+            <div className="text-sm font-medium text-zinc-900">
+              {t("dashboard.contributionMargin")}
+            </div>
             <div className="mt-2 flex flex-col gap-2 text-sm text-zinc-700">
               <div className="flex items-center justify-between">
                 <span className="text-zinc-600">{t("dashboard.contributionMarginRate")}</span>
@@ -553,9 +617,10 @@ function KpiCard({
   return (
     <div className={`rounded-xl border bg-white p-5 ${emphasis ? "md:col-span-1" : ""}`}>
       <div className="text-sm text-zinc-600">{title}</div>
-      <div className={`mt-2 font-semibold text-zinc-900 ${emphasis ? "text-3xl" : "text-2xl"}`}>{value}</div>
+      <div className={`mt-2 font-semibold text-zinc-900 ${emphasis ? "text-3xl" : "text-2xl"}`}>
+        {value}
+      </div>
       {sub ? <div className="mt-2 text-sm text-zinc-600">{sub}</div> : null}
     </div>
   );
 }
-

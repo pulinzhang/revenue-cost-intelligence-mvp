@@ -19,10 +19,7 @@ export async function findUserByEmail(email: string) {
   return res.rows[0] ?? null;
 }
 
-export async function insertLocalUser(opts: {
-  email: string;
-  passwordHash: string;
-}) {
+export async function insertLocalUser(opts: { email: string; passwordHash: string }) {
   const res = await query<{ id: string; email: string }>(
     `insert into users (email, password_hash, provider, role)
      values ($1, $2, 'local', 'user')
@@ -31,4 +28,3 @@ export async function insertLocalUser(opts: {
   );
   return res.rows[0];
 }
-

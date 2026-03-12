@@ -2,13 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  endOfMonth,
-  format,
-  startOfMonth,
-  startOfYear,
-  subMonths,
-} from "date-fns";
+import { endOfMonth, format, startOfMonth, startOfYear, subMonths } from "date-fns";
 import { apiFetch } from "@/lib/apiFetch";
 import type { FinanceSummaryResponse } from "@/lib/services/financeSummary.service";
 import { DashboardCharts } from "@/components/dashboard/DashboardCharts";
@@ -28,8 +22,7 @@ export function FinanceClient() {
   const { t } = useI18n();
   const router = useRouter();
   const sp = useSearchParams();
-  const btnClass =
-    "h-9 rounded-md border border-zinc-200 bg-white px-3 text-sm hover:bg-zinc-50";
+  const btnClass = "h-9 rounded-md border border-zinc-200 bg-white px-3 text-sm hover:bg-zinc-50";
 
   const initial = useMemo(() => {
     const d = defaultRange();
@@ -289,4 +282,3 @@ function fmtPct(v: number | null | undefined) {
   const sign = n > 0 ? "+" : "";
   return `${sign}${(n * 100).toFixed(1)}%`;
 }
-

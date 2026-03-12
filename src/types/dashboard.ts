@@ -13,4 +13,3 @@ export type TrendPoint = {
   revenue: number;
   totalCost: number;
 };
-

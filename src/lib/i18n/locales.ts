@@ -11,4 +11,3 @@ export const localeNames: Record<Locale, string> = {
 export function isLocale(v: string | null | undefined): v is Locale {
   return supportedLocales.includes(v as Locale);
 }
-

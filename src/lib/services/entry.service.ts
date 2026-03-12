@@ -13,4 +13,3 @@ export async function createEntry(input: {
 export async function listEntries(opts: { limit: number }) {
   return listManualEntries(opts);
 }
-

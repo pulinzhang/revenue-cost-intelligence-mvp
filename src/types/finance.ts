@@ -20,4 +20,3 @@ export type ManualEntry = {
   createdBy: string;
   createdAt: string; // ISO-ish string from DB formatting
 };
-

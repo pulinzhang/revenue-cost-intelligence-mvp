@@ -35,7 +35,6 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.AUTH_SECRET,
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
-  trustHost: true,
   providers: [
     ...(env.azureAdClientId && env.azureAdClientSecret && env.azureAdTenantId
       ? [
@@ -96,7 +95,12 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user, account, trigger }) {
       debugger;
-      console.log("jwt callback:", { provider: account?.provider, hasEmail: !!token.email, trigger, hasAccount: !!account });
+      console.log("jwt callback:", {
+        provider: account?.provider,
+        hasEmail: !!token.email,
+        trigger,
+        hasAccount: !!account,
+      });
       // Credentials sign-in
       if (user) {
         debugger;
@@ -121,7 +125,11 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       debugger;
-      console.log("session callback START:", { hasTokenUserId: !!token.userId, hasSessionUserId: !!session.user?.id, tokenKeys: Object.keys(token) });
+      console.log("session callback START:", {
+        hasTokenUserId: !!token.userId,
+        hasSessionUserId: !!session.user?.id,
+        tokenKeys: Object.keys(token),
+      });
       try {
         if (session.user) {
           debugger;
@@ -129,7 +137,10 @@ export const authOptions: NextAuthOptions = {
           session.user.role = token.role;
         }
         debugger;
-        console.log("session callback SUCCESS:", { userId: session.user?.id, role: session.user?.role });
+        console.log("session callback SUCCESS:", {
+          userId: session.user?.id,
+          role: session.user?.role,
+        });
         return session;
       } catch (err) {
         console.error("session callback ERROR:", err);

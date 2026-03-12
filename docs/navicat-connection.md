@@ -3,6 +3,7 @@
 ## 从 DATABASE_URL 提取连接信息
 
 你的 `.env` 文件中的 `DATABASE_URL` 格式类似如下（以 Supabase 为例）：
+
 ```
 postgresql://postgres.<PROJECT_REF>:[YOUR-PASSWORD]@<REGION>.pooler.supabase.com:6543/postgres?pgbouncer=true&sslmode=require
 ```
@@ -29,6 +30,7 @@ postgresql://postgres.<PROJECT_REF>:[YOUR-PASSWORD]@<REGION>.pooler.supabase.com
 ### ⚠️ 重要提示：连接超时问题
 
 如果遇到连接超时错误，请：
+
 1. **检查 Supabase 项目是否暂停** - 登录 Dashboard 恢复项目
 2. **使用连接池端口 `6543`** 而不是直接连接端口 `5432`（推荐）
 3. 查看详细排查指南：`docs/supabase-connection-troubleshooting.md`
@@ -90,6 +92,7 @@ postgresql://postgres.<PROJECT_REF>:[YOUR-PASSWORD]@<REGION>.pooler.supabase.com
 ### 获取连接池连接字符串
 
 在 Supabase Dashboard 中：
+
 1. 进入项目 → **Settings** → **Database**
 2. 找到 **Connection string** 部分
 3. 选择 **Session mode** 或 **Transaction mode**
@@ -111,6 +114,7 @@ postgresql://postgres.<PROJECT_REF>:[YOUR-PASSWORD]@<REGION>.pooler.supabase.com
 ## 连接问题排查
 
 如果遇到连接问题，请查看：
+
 - 📖 **详细排查指南**: `docs/supabase-connection-troubleshooting.md`
 - 🔍 **测试连接脚本**: `node scripts/test-db-connection.js`
 

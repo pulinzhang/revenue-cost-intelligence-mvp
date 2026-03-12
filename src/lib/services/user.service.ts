@@ -22,4 +22,3 @@ export async function registerUser(input: RegisterInput) {
     throw error;
   }
 }
-

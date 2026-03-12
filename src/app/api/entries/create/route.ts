@@ -8,20 +8,20 @@ import { parseJson } from "@/lib/validate";
 
 export async function POST(req: Request) {
   try {
-  const session = await getServerSession(authOptions);
-  const userId = session?.user?.id;
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
     if (!userId) unauthorized();
 
     const input = await parseJson(req, createEntrySchema);
 
-  const entry = await createEntry({
+    const entry = await createEntry({
       type: input.type,
       amount: input.amount,
       description: input.description,
-    createdBy: userId,
-  });
+      createdBy: userId,
+    });
 
-  return NextResponse.json({ entry }, { status: 201 });
+    return NextResponse.json({ entry }, { status: 201 });
   } catch (error) {
     return handleApiError(error);
   }

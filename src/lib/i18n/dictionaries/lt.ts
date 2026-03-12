@@ -1,6 +1,10 @@
 export const lt = {
   app: { name: "Pajamų ir sąnaudų analizė" },
-  nav: { dashboard: "Prietaisų skydas", finance: "Finansiniai duomenys", entries: "Duomenų įvedimas" },
+  nav: {
+    dashboard: "Prietaisų skydas",
+    finance: "Finansiniai duomenys",
+    entries: "Duomenų įvedimas",
+  },
   common: {
     language: "Kalba",
     start: "Pradžia",
@@ -54,11 +58,13 @@ export const lt = {
     costMixHelp: "Pastovių ir kintamųjų sąnaudų indėlis pasirinktam laikotarpiui.",
     vsLastPeriod: "vs prieš tai buvęs laikotarpis",
     alertsTitle: "Įspėjimai",
-    alertCostOutpacingRevenue: "Sąnaudos didėja greičiau nei pajamos vs prieš tai buvęs laikotarpis.",
+    alertCostOutpacingRevenue:
+      "Sąnaudos didėja greičiau nei pajamos vs prieš tai buvęs laikotarpis.",
     alertMarginDown: "Marža sumažėjo vs prieš tai buvęs laikotarpis.",
     alertMarginUp: "Marža pagerėjo vs prieš tai buvęs laikotarpis.",
     alertNearBreakEven: "Pajamos yra arti lūžio taško šiam laikotarpiui.",
-    breakEvenHelp: "Pajamos, reikalingos padengti pastovias sąnaudas esant dabartiniam kintamųjų sąnaudų santykiui.",
+    breakEvenHelp:
+      "Pajamos, reikalingos padengti pastovias sąnaudas esant dabartiniam kintamųjų sąnaudų santykiui.",
     safetyMargin: "Saugumo marža",
     safetyMarginHelp: "Kiek pajamos viršija lūžio tašką šiam laikotarpiui.",
     prevGrossProfit: "Ankstesnis bendrasis pelnas",
@@ -70,7 +76,8 @@ export const lt = {
     insightMargin: "Marža",
     contributionMargin: "Prisidintoji marža",
     contributionMarginRate: "(Pajamos − Kintamosios sąnaudos) / Pajamos",
-    contributionMarginHelp: "Pagrindinis veiklos rodiklis: kiek pajamų lieka padengti pastovias sąnaudas ir pelną.",
+    contributionMarginHelp:
+      "Pagrindinis veiklos rodiklis: kiek pajamų lieka padengti pastovias sąnaudas ir pelną.",
     trendTitle: "Pajamų ir sąnaudų tendencija",
     monthlyAggregation: "Mėnesinė agregacija",
     yAxisUsdMillions: "USD (Milijonai)",

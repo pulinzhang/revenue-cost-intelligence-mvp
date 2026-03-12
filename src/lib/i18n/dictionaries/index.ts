@@ -13,4 +13,3 @@ export const dictionaries: Record<Locale, Dictionary> = {
   zh,
   fr,
 };
-

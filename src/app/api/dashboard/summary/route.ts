@@ -8,10 +8,10 @@ import { validate } from "@/lib/validate";
 
 export async function GET(req: Request) {
   try {
-  const session = await getServerSession(authOptions);
+    const session = await getServerSession(authOptions);
     if (!session?.user?.id) unauthorized();
 
-  const { searchParams } = new URL(req.url);
+    const { searchParams } = new URL(req.url);
     const params = validate(
       z.object({
         startDate: z.string().optional(),
@@ -20,17 +20,17 @@ export async function GET(req: Request) {
         shopId: z.string().optional(),
       }),
       {
-    startDate: searchParams.get("startDate") ?? undefined,
-    endDate: searchParams.get("endDate") ?? undefined,
-    region: searchParams.get("region") ?? undefined,
-    shopId: searchParams.get("shopId") ?? undefined,
+        startDate: searchParams.get("startDate") ?? undefined,
+        endDate: searchParams.get("endDate") ?? undefined,
+        region: searchParams.get("region") ?? undefined,
+        shopId: searchParams.get("shopId") ?? undefined,
       },
       "Invalid params",
     );
 
     const summary = await fetchDashboardSummary(params);
 
-  return NextResponse.json({ summary });
+    return NextResponse.json({ summary });
   } catch (error) {
     return handleApiError(error);
   }

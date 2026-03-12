@@ -45,7 +45,13 @@ export function FinanceGrid({
 
   const colDefs = useMemo<ColDef<FinanceRow>[]>(
     () => [
-      { field: "date", headerName: t("finance.tableDate"), filter: true, minWidth: 120, sort: "desc" },
+      {
+        field: "date",
+        headerName: t("finance.tableDate"),
+        filter: true,
+        minWidth: 120,
+        sort: "desc",
+      },
       { field: "shopId", headerName: t("finance.tableClient"), filter: true, minWidth: 160 },
       {
         field: "revenue",
@@ -114,11 +120,13 @@ export function FinanceGrid({
       ) : null}
       <div className="flex items-center justify-between gap-4">
         <div className="text-sm text-zinc-600">
-          {t("finance.page")} <span className="font-medium text-zinc-900">{page}</span> / {totalPages} ·{" "}
-          {t("finance.pageShowing")} <span className="font-medium text-zinc-900">{startRow}</span>–
+          {t("finance.page")} <span className="font-medium text-zinc-900">{page}</span> /{" "}
+          {totalPages} · {t("finance.pageShowing")}{" "}
+          <span className="font-medium text-zinc-900">{startRow}</span>–
           <span className="font-medium text-zinc-900">{endRow}</span> {t("finance.pageOf")}{" "}
           <span className="font-medium text-zinc-900">{totalCount}</span> ·{" "}
-          <span className="font-medium text-zinc-900">{rows.length}</span> {t("finance.pageRowsOnThisPage")}
+          <span className="font-medium text-zinc-900">{rows.length}</span>{" "}
+          {t("finance.pageRowsOnThisPage")}
         </div>
         <div className="flex items-center gap-3">
           <label className="flex items-center gap-2 text-sm">

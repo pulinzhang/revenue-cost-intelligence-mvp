@@ -14,4 +14,3 @@ export type AppUser = {
   email: string;
   role: UserRole;
 };
-

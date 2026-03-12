@@ -12,7 +12,7 @@ export function formatZodError(error: ZodError): { issues: ZodIssueDto[] } {
     issues: error.issues.map((i) => ({
       // Zod's issue path can include `PropertyKey` (string | number | symbol) in newer typings.
       // Our API DTO intentionally excludes `symbol`, so we normalize everything to string/number.
-      path: i.path.map((p) => (typeof p === "symbol" ? p.description ?? p.toString() : p)),
+      path: i.path.map((p) => (typeof p === "symbol" ? (p.description ?? p.toString()) : p)),
       message: i.message,
       code: i.code,
     })),
@@ -47,4 +47,3 @@ export async function parseJson<TSchema extends z.ZodTypeAny>(
   const body = await readJson(req);
   return validate(schema, body, message);
 }
-

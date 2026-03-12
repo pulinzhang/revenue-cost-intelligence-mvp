@@ -53,9 +53,7 @@ export function DashboardCharts({ trends }: { trends: TrendPoint[] }) {
         : t("dashboard.anomalyMixChanged");
     const deltaPp = (Math.abs(delta) * 100).toFixed(1);
     const labelTemplate = t("dashboard.anomalyLabel");
-    const label = labelTemplate
-      .replace("{delta}", deltaPp)
-      .replace("{reason}", reason);
+    const label = labelTemplate.replace("{delta}", deltaPp).replace("{reason}", reason);
     return {
       month: cur.month,
       marginPct: cur.marginPct as number,
@@ -150,15 +148,19 @@ export function DashboardCharts({ trends }: { trends: TrendPoint[] }) {
       </div>
 
       <div className="h-[140px]">
-    <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ left: 8, right: 16, top: 8, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="month"
               tick={{ fontSize: 12 }}
               tickFormatter={(m) => (typeof m === "string" ? m.slice(0, 7) : m)}
             />
-            <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => fmtPct(Number(v))} domain={["auto", "auto"]} />
+            <YAxis
+              tick={{ fontSize: 12 }}
+              tickFormatter={(v) => fmtPct(Number(v))}
+              domain={["auto", "auto"]}
+            />
             <Tooltip
               formatter={(value) => [fmtPct(Number(value)), t("dashboard.marginChartTitle")]}
               labelFormatter={(label) => `${t("dashboard.axisMonth")}: ${label}`}
@@ -184,11 +186,13 @@ export function DashboardCharts({ trends }: { trends: TrendPoint[] }) {
                 const cy = props?.cy;
                 const payload = props?.payload as any;
                 if (!payload || anomaly?.month !== payload.month) return null;
-                return <circle cx={cx} cy={cy} r={4} fill="#ef4444" stroke="#fff" strokeWidth={2} />;
+                return (
+                  <circle cx={cx} cy={cy} r={4} fill="#ef4444" stroke="#fff" strokeWidth={2} />
+                );
               }}
             />
-      </LineChart>
-    </ResponsiveContainer>
+          </LineChart>
+        </ResponsiveContainer>
         {anomaly ? <div className="mt-1 text-xs text-zinc-500">{anomaly.label}</div> : null}
       </div>
     </div>
