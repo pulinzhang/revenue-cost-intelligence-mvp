@@ -1,6 +1,7 @@
 name = 'revenue-cost-intelligence-mvp'
 main = ".open-next/worker.js"
 compatibility_date = "2024-09-23"
+node_compat = true # Enable full Node.js polyfills
 compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
 
 [assets]
