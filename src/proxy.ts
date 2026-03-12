@@ -7,3 +7,6 @@ export const proxy = withAuth({
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico|api/auth|login).*)"],
 };
+
+export const runtime = "edge";
+export const dynamic = "force-dynamic";
