@@ -272,7 +272,7 @@ psql $DATABASE_URL -f sql/seed.sample-data.sql
 │  │  ├─ services/              # Business logic
 │  │  └─ validators/           # Zod schemas for validation
 │  ├─ types/                    # TypeScript type definitions
-│  └─ proxy.ts                 # Route protection middleware
+│  └─ middleware.ts             # Route protection middleware
 ├─ .env.example                # Environment variable template
 ├─ .eslint.config.mjs         # ESLint configuration
 ├─ next.config.ts              # Next.js configuration
