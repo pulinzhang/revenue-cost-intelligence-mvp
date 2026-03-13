@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
               clientSecret: env.azureAdClientSecret,
               tenantId: env.azureAdTenantId,
               authorization: {
-                params: { scope: "openid profile email User.Read" },
+                params: { scope: "openid profile email User.Read", prompt: "none" },
               },
             });
           })(),
