@@ -30,7 +30,7 @@ Monolithic full-stack **Next.js (App Router)** MVP for revenue/cost analytics an
 | Charts | Recharts | React-based charting library |
 | Data Grid | AG Grid Community | Enterprise-grade data table |
 | Validation | Zod | TypeScript-first schema validation |
-| Deployment | Cloudflare Workers | Edge deployment via @opennextjs/cloudflare |
+| Deployment | Azure App Service | Cloud-native deployment via GitHub Actions |
 
 ## Features
 
@@ -276,8 +276,6 @@ psql $DATABASE_URL -f sql/seed.sample-data.sql
 ├─ .env.example                # Environment variable template
 ├─ .eslint.config.mjs         # ESLint configuration
 ├─ next.config.ts              # Next.js configuration
-├─ wrangler.toml              # Cloudflare Workers config
-├─ open-next.config.ts        # OpenNext Cloudflare adapter config
 └─ package.json               # Dependencies and scripts
 ```
 
@@ -471,20 +469,9 @@ npx tsc --noEmit
 4. Add `?sslmode=require` to the URI
 5. Run `sql/schema.sql` in the Supabase SQL Editor
 
-### Cloudflare Workers (Recommended)
+### Azure App Service
 
-This project uses `@opennextjs/cloudflare` for edge deployment.
-
-```bash
-# Build and deploy
-npm run deploy
-```
-
-Or preview locally:
-
-```bash
-npm run preview
-```
+部署使用 GitHub Actions 自动进行。详见 [.github/workflows/main_revenuecostmvp.yml](.github/workflows/main_revenuecostmvp.yml)。
 
 ### Environment Variables in Production
 
@@ -492,7 +479,6 @@ Set the same environment variables in your deployment platform:
 
 | Platform | How to set |
 |----------|------------|
-| Cloudflare Workers | wrangler secret put DATABASE_URL |
 | Azure App Service | Configuration → Application settings |
 | Vercel | Project Settings → Environment Variables |
 

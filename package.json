@@ -15,12 +15,9 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "pages:build": "next build",
-    "pages:dev": "next dev",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "pages:dev": "next dev"
   },
   "dependencies": {
-    "@opennextjs/cloudflare": "^1.17.1",
     "ag-grid-community": "^35.1.0",
     "ag-grid-react": "^35.1.0",
     "bcryptjs": "^3.0.3",
